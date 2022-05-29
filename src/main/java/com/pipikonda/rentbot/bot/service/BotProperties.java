@@ -12,6 +12,7 @@ public class BotProperties {
 
     String url;
     String callbackUrl;
+    boolean setWebhookPostConstruct;
 
     public String getTelegramUrl() {
         return normalizePath(url);
