@@ -15,15 +15,15 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User saveUserState(ChatMemberUpdate chatMemberUpdate) {
+        User.UserState userState = convertTelegramState(chatMemberUpdate.getNewChatMember().getStatus());
         User user = User.builder()
                 .name(chatMemberUpdate.getFrom().getFirstName())
                 .lastName(chatMemberUpdate.getFrom().getLastName())
                 .username(chatMemberUpdate.getFrom().getUsername())
                 .id(chatMemberUpdate.getFrom().getId())
-                .state(convertTelegramState(chatMemberUpdate.getNewChatMember().getStatus()))
+                .state(userState)
                 .build();
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     private User.UserState convertTelegramState(String telegramState) {

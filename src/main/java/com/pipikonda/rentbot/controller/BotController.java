@@ -1,7 +1,7 @@
-package com.pipikonda.rentbot.bot.controller;
+package com.pipikonda.rentbot.controller;
 
 import com.pipikonda.rentbot.bot.model.update.Update;
-import com.pipikonda.rentbot.bot.service.UpdateService;
+import com.pipikonda.rentbot.service.UpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

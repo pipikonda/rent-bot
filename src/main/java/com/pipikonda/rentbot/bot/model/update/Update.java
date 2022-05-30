@@ -14,6 +14,8 @@ public class Update {
     @JsonProperty("update_id")
     Long updateId;
 
+    Message message;
+
     @JsonProperty("my_chat_member")
     ChatMemberUpdate myChatMember;
 

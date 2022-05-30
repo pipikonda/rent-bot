@@ -2,6 +2,7 @@ package com.pipikonda.rentbot.bot.service;
 
 import com.pipikonda.rentbot.bot.model.TelegramApiAction;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,8 +21,7 @@ public class TelegramBotActionClient {
     }
 
     public void sendRequest(TelegramApiAction action) {
-        log.info("Action queryString is {}", action);
         String requestUrl = botProperties.getTelegramUrl() + action;
-        restTemplate.exchange(requestUrl, HttpMethod.GET, null, Object.class);
+        restTemplate.exchange(requestUrl, HttpMethod.POST, new HttpEntity<>(action), Object.class);
     }
 }
