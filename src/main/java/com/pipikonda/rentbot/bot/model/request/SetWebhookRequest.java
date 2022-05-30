@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pipikonda.rentbot.bot.model.BotAction;
 import com.pipikonda.rentbot.bot.model.TelegramApiAction;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 
 @Builder(toBuilder = true)
-@Getter
-public class SetWebhookRequest extends TelegramApiAction {
+@Value
+public class SetWebhookRequest implements TelegramApiAction {
 
     @JsonProperty("url")
-    private final String url;
+    String url;
 
     @JsonProperty("drop_pending_updates")
-    private final Boolean dropPendingUpdates;
+    boolean dropPendingUpdates;
 
-    public SetWebhookRequest(String url, Boolean dropPendingUpdates) {
-        super(BotAction.SET_WEBHOOK);
-        this.url = url;
-        this.dropPendingUpdates = dropPendingUpdates;
+    @Override
+    public String getActionName() {
+        return BotAction.SET_WEBHOOK.getCommandName();
     }
 }

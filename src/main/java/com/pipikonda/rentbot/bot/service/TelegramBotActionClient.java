@@ -21,7 +21,7 @@ public class TelegramBotActionClient {
     }
 
     public void sendRequest(TelegramApiAction action) {
-        String requestUrl = botProperties.getTelegramUrl() + action;
+        String requestUrl = botProperties.getTelegramUrl() + action.getActionName();
         restTemplate.exchange(requestUrl, HttpMethod.POST, new HttpEntity<>(action), Object.class);
     }
 }
