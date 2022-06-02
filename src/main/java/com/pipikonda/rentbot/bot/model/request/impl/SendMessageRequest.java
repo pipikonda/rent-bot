@@ -1,15 +1,16 @@
-package com.pipikonda.rentbot.bot.model.request;
+package com.pipikonda.rentbot.bot.model.request.impl;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pipikonda.rentbot.bot.model.BotAction;
-import com.pipikonda.rentbot.bot.model.TelegramApiAction;
-import com.pipikonda.rentbot.bot.model.request.markup.ReplyMarkup;
+import com.pipikonda.rentbot.bot.model.enums.BotAction;
+import com.pipikonda.rentbot.bot.model.request.TelegramApiAction;
+import com.pipikonda.rentbot.bot.model.request.impl.markup.ReplyMarkup;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.Value;
 
 @Builder(toBuilder = true)
 @Value
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SendMessageRequest implements TelegramApiAction {
 
     @JsonProperty("chat_id")
@@ -17,13 +18,13 @@ public class SendMessageRequest implements TelegramApiAction {
     String text;
 
     @JsonProperty("parse_mode")
-    String parseMode; //enum???
+    String parseMode;
 
     @JsonProperty("disable_web_page_preview")
-    boolean disableWebPagePreview;
+    Boolean disableWebPagePreview;
 
     @JsonProperty("disable_notification")
-    boolean disableNotification;
+    Boolean disableNotification;
 
     @JsonProperty("reply_markup")
     ReplyMarkup replyMarkup;

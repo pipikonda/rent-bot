@@ -1,7 +1,7 @@
 package com.pipikonda.rentbot.bot;
 
-import com.pipikonda.rentbot.bot.model.request.SetWebhookRequest;
-import com.pipikonda.rentbot.bot.model.TelegramApiAction;
+import com.pipikonda.rentbot.bot.model.request.impl.SetWebhookRequest;
+import com.pipikonda.rentbot.bot.model.request.TelegramApiAction;
 import com.pipikonda.rentbot.bot.service.BotProperties;
 import com.pipikonda.rentbot.bot.service.TelegramBotActionClient;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * extend it when use it as library
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -31,6 +34,7 @@ public class RentBot {
     }
 
     public void execute(TelegramApiAction telegramApiAction) {
+        log.info("bot send answer {}", telegramApiAction);
         telegramBotActionClient.sendRequest(telegramApiAction);
     }
 }

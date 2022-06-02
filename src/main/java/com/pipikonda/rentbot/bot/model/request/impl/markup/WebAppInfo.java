@@ -1,4 +1,4 @@
-package com.pipikonda.rentbot.bot.model.request.markup;
+package com.pipikonda.rentbot.bot.model.request.impl.markup;
 
 import lombok.Builder;
 import lombok.Value;

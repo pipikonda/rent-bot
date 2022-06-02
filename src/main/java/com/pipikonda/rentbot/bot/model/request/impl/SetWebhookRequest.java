@@ -1,8 +1,8 @@
-package com.pipikonda.rentbot.bot.model.request;
+package com.pipikonda.rentbot.bot.model.request.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pipikonda.rentbot.bot.model.BotAction;
-import com.pipikonda.rentbot.bot.model.TelegramApiAction;
+import com.pipikonda.rentbot.bot.model.enums.BotAction;
+import com.pipikonda.rentbot.bot.model.request.TelegramApiAction;
 import lombok.Builder;
 import lombok.Value;
 

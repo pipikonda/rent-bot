@@ -1,6 +1,6 @@
 package com.pipikonda.rentbot.bot.service;
 
-import com.pipikonda.rentbot.bot.model.TelegramApiAction;
+import com.pipikonda.rentbot.bot.model.request.TelegramApiAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;

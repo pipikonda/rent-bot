@@ -1,5 +1,6 @@
 package com.pipikonda.rentbot.service;
 
+import com.pipikonda.rentbot.bot.model.update.InlineQuery;
 import com.pipikonda.rentbot.bot.model.update.Update;
 import com.pipikonda.rentbot.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UpdateService {
 
     private final UserService userService;
+    private final InlineQueryService inlineQueryService;
 
     public void processUpdate(Update update) {
         //process update
@@ -19,9 +21,15 @@ public class UpdateService {
             //user enter message
 
         }
+
+        if (update.getInlineQuery() != null) {
+            inlineQueryService.processInlineQuery(update.getInlineQuery());
+        }
+
         if (update.getMyChatMember() != null) {
             //значит что пользователь подписался или отписался от бота
-            log.info("got update getMyChatMember");
+            log.info("got update getMyChatMember from {} {}", update.getMyChatMember().getFrom().getFirstName(),
+                    update.getMyChatMember().getFrom().getLastName());
             userService.saveUserState(update.getMyChatMember());
         }
     }

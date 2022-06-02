@@ -1,4 +1,4 @@
-package com.pipikonda.rentbot.bot.model.update.enums;
+package com.pipikonda.rentbot.bot.model.enums;
 
 public enum ChatType {
 

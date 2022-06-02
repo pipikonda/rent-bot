@@ -1,5 +1,6 @@
-package com.pipikonda.rentbot.bot.model.request.markup;
+package com.pipikonda.rentbot.bot.model.request.impl.markup;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -9,15 +10,16 @@ import lombok.Value;
  */
 @Value
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KeyboardButton {
 
     String text;
 
     @JsonProperty("request_contact")
-    boolean requestContact;
+    Boolean requestContact;
 
     @JsonProperty("request_location")
-    boolean requestLocation;
+    Boolean requestLocation;
 
     @JsonProperty("web_app")
     WebAppInfo webApp;

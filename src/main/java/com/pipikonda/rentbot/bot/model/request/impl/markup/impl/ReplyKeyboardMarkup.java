@@ -1,8 +1,8 @@
-package com.pipikonda.rentbot.bot.model.request.markup.impl;
+package com.pipikonda.rentbot.bot.model.request.impl.markup.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pipikonda.rentbot.bot.model.request.markup.KeyboardButton;
-import com.pipikonda.rentbot.bot.model.request.markup.ReplyMarkup;
+import com.pipikonda.rentbot.bot.model.request.impl.markup.ReplyMarkup;
+import com.pipikonda.rentbot.bot.model.request.impl.markup.KeyboardButton;
 import lombok.Builder;
 import lombok.Value;
 

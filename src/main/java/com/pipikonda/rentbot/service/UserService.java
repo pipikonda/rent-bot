@@ -27,15 +27,15 @@ public class UserService {
                 .state(userState)
                 .build());
         if (user.getState().equals(User.UserState.SUBSCRIBED)) {
-            rentBot.execute(messageService.getGreetingMessage(user));
+            rentBot.execute(messageService.getTextMessage(user, "hello " + user.getName() + " " + user.getLastName()));
         }
         return user;
     }
 
     private User.UserState convertTelegramState(String telegramState) {
-        //creator and administrator ????
+        log.info("State is {}", telegramState);
         return switch (telegramState) {
-            case "member" -> User.UserState.SUBSCRIBED;
+            case "member", "creator", "administrator" -> User.UserState.SUBSCRIBED;
             case "kicked", "restricted", "left" -> User.UserState.UNSUBSCRIBED;
             default -> throw new IllegalArgumentException("Unknown state " + telegramState);
         };

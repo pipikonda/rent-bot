@@ -16,6 +16,9 @@ public class Update {
 
     Message message;
 
+    @JsonProperty("inline_query")
+    InlineQuery inlineQuery;
+
     @JsonProperty("my_chat_member")
     ChatMemberUpdate myChatMember;
 
