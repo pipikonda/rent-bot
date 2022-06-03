@@ -2,14 +2,18 @@ package com.pipikonda.rentbot.service;
 
 import com.pipikonda.rentbot.bot.RentBot;
 import com.pipikonda.rentbot.bot.model.request.impl.AnswerInlineQueryRequest;
+import com.pipikonda.rentbot.bot.model.request.impl.inline_result.InlineQueryResult;
 import com.pipikonda.rentbot.bot.model.request.impl.inline_result.impl.InlineQueryResultLocation;
 import com.pipikonda.rentbot.bot.model.update.InlineQuery;
+import com.pipikonda.rentbot.service.http.SearchLocationClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,16 +21,29 @@ import java.util.UUID;
 public class InlineQueryService {
 
     private final RentBot rentBot;
+    private final SearchLocationClient searchLocationClient;
 
     public void processInlineQuery(InlineQuery inlineQuery) {
-        rentBot.execute(AnswerInlineQueryRequest.builder()
+        String queryString = inlineQuery.getQuery();
+        AnswerInlineQueryRequest answer = AnswerInlineQueryRequest.builder()
                 .inlineQueryId(inlineQuery.getId())
-                .results(List.of(InlineQueryResultLocation.builder()
-                        .id(UUID.randomUUID().toString())
-                        .title("hello search result is " + inlineQuery.getQuery())
-                        .latitude((float) 46.6345)
-                        .longitude((float) 32.6169)
-                        .build()))
+                .results(List.of())
+                .build();
+        if (queryString.length() < 3) {
+            rentBot.execute(answer);
+            return;
+        }
+        List<InlineQueryResult> cities = Arrays.stream(searchLocationClient.getCity(inlineQuery.getQuery()))
+                .map(e -> InlineQueryResultLocation.builder()
+                        .id(UUID.randomUUID() + "_" + inlineQuery.getId())
+                        .latitude(e.getLat())
+                        .longitude(e.getLon())
+                        .title(e.getDisplayName())
+                        .build())
+                .collect(Collectors.toList());
+
+        rentBot.execute(answer.toBuilder()
+                .results(cities)
                 .build());
     }
 }

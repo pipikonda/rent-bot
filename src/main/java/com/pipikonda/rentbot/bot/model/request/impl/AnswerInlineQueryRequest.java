@@ -10,7 +10,7 @@ import lombok.Value;
 
 import java.util.List;
 
-@Builder
+@Builder(toBuilder = true)
 @Value
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AnswerInlineQueryRequest implements TelegramApiAction {

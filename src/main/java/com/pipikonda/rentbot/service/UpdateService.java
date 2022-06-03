@@ -23,6 +23,7 @@ public class UpdateService {
         }
 
         if (update.getInlineQuery() != null) {
+            //пользователь ввел @bot_name {command}{some_text}
             inlineQueryService.processInlineQuery(update.getInlineQuery());
         }
 
