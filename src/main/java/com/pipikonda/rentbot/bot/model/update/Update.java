@@ -22,6 +22,9 @@ public class Update {
     @JsonProperty("my_chat_member")
     ChatMemberUpdate myChatMember;
 
+    @JsonProperty("chosen_inline_result")
+    ChosenInlineResult chosenInlineResult;
+
     @JsonProperty("chat_member")
     ChatMemberUpdate chatMember; //for public chat's
 

@@ -1,5 +1,6 @@
 package com.pipikonda.rentbot.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     UserState state;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "lang")
+    Lang lang;
 
     public enum UserState {
 

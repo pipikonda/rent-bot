@@ -3,6 +3,7 @@ package com.pipikonda.rentbot.service.http;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class SearchLocationClient {
 
     private final RestTemplate restTemplate;

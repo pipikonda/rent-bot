@@ -2,6 +2,7 @@ package com.pipikonda.rentbot.service;
 
 import com.pipikonda.rentbot.bot.RentBot;
 import com.pipikonda.rentbot.bot.model.update.ChatMemberUpdate;
+import com.pipikonda.rentbot.domain.Lang;
 import com.pipikonda.rentbot.domain.User;
 import com.pipikonda.rentbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +20,15 @@ public class UserService {
 
     public User saveUserState(ChatMemberUpdate chatMemberUpdate) {
         User.UserState userState = convertTelegramState(chatMemberUpdate.getNewChatMember().getStatus());
-        User user = userRepository.save(User.builder()
+
+        return userRepository.save(User.builder()
                 .name(chatMemberUpdate.getFrom().getFirstName())
                 .lastName(chatMemberUpdate.getFrom().getLastName())
                 .username(chatMemberUpdate.getFrom().getUsername())
                 .id(chatMemberUpdate.getFrom().getId())
                 .state(userState)
+                .lang(Lang.from(chatMemberUpdate.getFrom().getLanguageCode()))
                 .build());
-        if (user.getState().equals(User.UserState.SUBSCRIBED)) {
-            rentBot.execute(messageService.getTextMessage(user, "hello " + user.getName() + " " + user.getLastName()));
-        }
-        return user;
     }
 
     private User.UserState convertTelegramState(String telegramState) {

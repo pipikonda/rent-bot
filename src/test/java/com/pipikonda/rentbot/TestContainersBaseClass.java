@@ -14,11 +14,14 @@ import org.testcontainers.utility.DockerImageName;
 @Slf4j
 public class TestContainersBaseClass {
 
-    @Container
-    public static PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName.parse("postgres"))
+    public static PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer(DockerImageName.parse("postgres"))
             .withDatabaseName("test_database")
             .withUsername("foo")
             .withPassword("secret");
+
+    static {
+        POSTGRES.start();
+    }
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {

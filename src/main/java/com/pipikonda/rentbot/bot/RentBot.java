@@ -34,7 +34,7 @@ public class RentBot {
     }
 
     public void execute(TelegramApiAction telegramApiAction) {
-        log.info("bot send answer {}", telegramApiAction);
+        log.info("bot send answer {}", telegramApiAction.getClass());
         telegramBotActionClient.sendRequest(telegramApiAction);
     }
 }

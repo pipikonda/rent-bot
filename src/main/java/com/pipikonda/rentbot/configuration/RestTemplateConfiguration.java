@@ -1,18 +1,20 @@
 package com.pipikonda.rentbot.configuration;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfiguration {
 
     @Bean
     public RestTemplate restTemplate() {
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(1000);
-        requestFactory.setReadTimeout(5000);
-        return new RestTemplate(requestFactory);
+        return new RestTemplateBuilder()
+                .setConnectTimeout(Duration.ofMillis(1000))
+                .setReadTimeout(Duration.ofMillis(5000))
+                .build();
     }
 }

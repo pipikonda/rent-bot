@@ -20,6 +20,9 @@ public class AnswerInlineQueryRequest implements TelegramApiAction {
 
     List<InlineQueryResult> results;
 
+    @JsonProperty("cache_time")
+    Integer cacheTime;
+
     @Override
     public String getActionName() {
         return BotAction.ANSWER_INLINE_QUERY.getCommandName();
