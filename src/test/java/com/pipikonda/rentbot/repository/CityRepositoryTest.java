@@ -78,6 +78,6 @@ class CityRepositoryTest extends TestContainersBaseClass {
                 .build());
 
         assertThat(instance.findByTranslationsAsMap(Set.of(24L, 1452L)))
-                .isEqualTo(Map.of(24L, city1.getId(), 1452L, city3.getTranslationId()));
+                .isEqualTo(Map.of(24L, city1.getId(), 1452L, city3.getId()));
     }
 }

@@ -20,10 +20,10 @@ public interface TranslationRepository extends JpaRepository<Translation, Long> 
     Stream<Translation> findByTranslationIdIn(Set<Long> translations);
 
     @Query(value = "select * from translation where translation_id in :translationId and value like :valuePattern", nativeQuery = true)
-    Stream<Translation> findByTranslationsAndValue(@Param("translationId") List<Long> translations,
+    Stream<Translation> findByTranslationsAndValue(@Param("translationId") Set<Long> translations,
                                                        @Param("valuePattern") String valuePattern);
 
-    default Stream<Translation> findTranslationStartWithValue(List<Long> translations, String value) {
+    default Stream<Translation> findTranslationStartWithValue(Set<Long> translations, String value) {
         if (translations.isEmpty()) {
             return Stream.of();
         }

@@ -26,7 +26,7 @@ public class SearchLocationClient {
         this.url = url;
     }
 
-    @Cacheable(value = "CITY_INFO", key = "#cityName")
+//    @Cacheable(value = "CITY_INFO", key = "#cityName")
     public GetCityResponse[] getCity(String cityName) {
         return Optional.ofNullable(restTemplate.getForObject(url, GetCityResponse[].class, cityName))
                 .orElse(new GetCityResponse[]{});

@@ -2,6 +2,7 @@ package com.pipikonda.rentbot.service.inline.impl;
 
 import com.pipikonda.rentbot.TestContainersBaseClass;
 import com.pipikonda.rentbot.bot.model.request.impl.inline_result.impl.InlineQueryResultArticle;
+import com.pipikonda.rentbot.bot.model.request.impl.inline_result.impl.InputTextMessageContent;
 import com.pipikonda.rentbot.bot.model.update.InlineQuery;
 import com.pipikonda.rentbot.bot.model.update.UserDto;
 import com.pipikonda.rentbot.controller.CityController;
@@ -19,9 +20,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.CacheManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -47,12 +50,17 @@ class CitySearchServiceTest extends TestContainersBaseClass {
     @Autowired
     private CityRepository cityRepository;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     @AfterEach
     void clearDb() {
         cityRepository.deleteAll();
         translationInfoRepository.deleteAll();
         translationRepository.deleteAll();
+        userRepository.deleteAll();
+        Objects.requireNonNull(cacheManager.getCache("CITY_NAME")).clear();
     }
 
     @Test
@@ -91,7 +99,7 @@ class CitySearchServiceTest extends TestContainersBaseClass {
     }
 
     @Test
-    void testSearch_shouldReturnSameValueWhatWasEnteredByUser_whenUserLangIsEqualToValueLang() {
+    void testSearch_shouldReturnResult_whenUserLangIsEqualToValueLang() {
         UserDto userDto = UserDto.builder()
                 .id(123L)
                 .firstName("some name")
@@ -114,6 +122,9 @@ class CitySearchServiceTest extends TestContainersBaseClass {
         assertThat(instance.search(query)).isEqualTo(List.of(InlineQueryResultArticle.builder()
                 .id(String.valueOf(city1.getId()))
                 .title("Николаев")
+                .inputMessageContent(InputTextMessageContent.builder()
+                        .messageText("Николаев")
+                        .build())
                 .build()));
     }
 
@@ -141,6 +152,9 @@ class CitySearchServiceTest extends TestContainersBaseClass {
         assertThat(instance.search(query)).isEqualTo(List.of(InlineQueryResultArticle.builder()
                 .id(String.valueOf(city1.getId()))
                 .title("Миколаїв")
+                .inputMessageContent(InputTextMessageContent.builder()
+                        .messageText("Миколаїв")
+                        .build())
                 .build()));
     }
 
@@ -168,6 +182,9 @@ class CitySearchServiceTest extends TestContainersBaseClass {
         assertThat(instance.search(query)).isEqualTo(List.of(InlineQueryResultArticle.builder()
                 .id(String.valueOf(city1.getId()))
                 .title("Миколаїв")
+                .inputMessageContent(InputTextMessageContent.builder()
+                        .messageText("Миколаїв")
+                        .build())
                 .build()));
     }
 }

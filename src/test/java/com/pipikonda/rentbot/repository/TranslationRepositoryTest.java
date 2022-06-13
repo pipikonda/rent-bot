@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -91,11 +92,11 @@ class TranslationRepositoryTest extends TestContainersBaseClass {
                 .value("DNIPRO RIVER")
                 .build());
 
-        assertThat(instance.findTranslationStartWithValue(List.of(1L), "DN").toList())
+        assertThat(instance.findTranslationStartWithValue(Set.of(1L), "DN").toList())
                 .isEqualTo(List.of(translation1, translation2));
-        assertThat(instance.findTranslationStartWithValue(List.of(4L), "DN").toList())
+        assertThat(instance.findTranslationStartWithValue(Set.of(4L), "DN").toList())
                 .isEqualTo(List.of());
-        assertThat(instance.findTranslationStartWithValue(List.of(1L), "IV").toList())
+        assertThat(instance.findTranslationStartWithValue(Set.of(1L), "IV").toList())
                 .isEqualTo(List.of());
     }
 }

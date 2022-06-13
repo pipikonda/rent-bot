@@ -18,7 +18,8 @@ public interface CityRepository extends JpaRepository<City, Long> {
         if (translations.isEmpty()) {
             return Map.of();
         }
-        return findByTranslationIdIn(translations).collect(Collectors.toMap(City::getTranslationId, City::getId));
+        return findByTranslationIdIn(translations)
+                .collect(Collectors.toMap(City::getTranslationId, City::getId));
     }
 
     default Stream<City> findByTranslationIdList(Set<Long> translations) {

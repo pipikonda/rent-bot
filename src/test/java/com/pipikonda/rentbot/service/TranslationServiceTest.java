@@ -2,6 +2,7 @@ package com.pipikonda.rentbot.service;
 
 import com.pipikonda.rentbot.TestContainersBaseClass;
 import com.pipikonda.rentbot.controller.CityController;
+import com.pipikonda.rentbot.domain.City;
 import com.pipikonda.rentbot.domain.Lang;
 import com.pipikonda.rentbot.domain.Translation;
 import com.pipikonda.rentbot.domain.TranslationInfo;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,7 +71,7 @@ class TranslationServiceTest extends TestContainersBaseClass {
                         .translationId(translationInfo.getId())
                 .build());
         translationRepository.save(Translation.builder()
-                .lang(Lang.UK)
+                .lang(Lang.RU)
                 .value("some value another lang")
                 .translationId(translationInfo.getId())
                 .build());
@@ -80,22 +82,22 @@ class TranslationServiceTest extends TestContainersBaseClass {
                 .build());
 
         assertThat(instance.getTranslationsAsMap(translationInfo.getId()))
-                .isEqualTo(Map.of(Lang.RU, "some value default lang", Lang.UK, "some value another lang"));
+                .isEqualTo(Map.of(Lang.DEFAULT_LANG, "some value default lang", Lang.RU, "some value another lang"));
     }
 
     @Test
     void findByValueLike() {
-        cityService.create(CityController.CityCreateDto.builder()
+        City city = cityService.create(CityController.CityCreateDto.builder()
                         .names(Map.of(Lang.RU, "Николаев", Lang.UK, "Миколаїв"))
                 .build());
 
-        assertThat(instance.findByValueLike("Ник", TranslationInfo.TranslationType.CITY_NAME).size())
+        assertThat(instance.findByValueLike("Ник", Set.of(city.getTranslationId())).size())
                 .isEqualTo(1);
     }
 
     @Test
     void findByValueLike_whenInputHasNotMatchValue() {
-        assertThat(instance.findByValueLike("Жит", TranslationInfo.TranslationType.CITY_NAME))
+        assertThat(instance.findByValueLike("Жит", Set.of()))
                 .isEqualTo(List.of());
     }
 }

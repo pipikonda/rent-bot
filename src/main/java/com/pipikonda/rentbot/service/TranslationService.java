@@ -7,6 +7,7 @@ import com.pipikonda.rentbot.repository.TranslationInfoRepository;
 import com.pipikonda.rentbot.repository.TranslationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -50,15 +51,12 @@ public class TranslationService {
     }
 
     @Transactional
-    public List<Translation> findByValueLike(String value, TranslationInfo.TranslationType type) {
-        List<Long> translationsId = translationInfoRepository.findByTranslationType(type)
-                .map(TranslationInfo::getId)
-                .toList();
-        log.info("search in {} translations", translationsId.size());
-        if (translationsId.isEmpty()) {
+    public List<Translation> findByValueLike(String value, Set<Long> translations) {
+        log.info("search in {} translations", translations.size());
+        if (translations.isEmpty()) {
             return List.of();
         }
-        return translationRepository.findTranslationStartWithValue(translationsId, value).toList();
+        return translationRepository.findTranslationStartWithValue(translations, value).toList();
     }
 
 }
