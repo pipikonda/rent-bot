@@ -18,7 +18,6 @@ public class BotController {
     @PostMapping("/callback/update")
     public void updateCallback(@RequestBody Update update) {
         log.info("got update - {} ", update.getUpdateId());
-        log.info("inline query - {}", update.getInlineQuery());
         updateService.processUpdate(update);
     }
 }

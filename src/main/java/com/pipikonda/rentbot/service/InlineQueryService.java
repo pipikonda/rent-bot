@@ -1,7 +1,6 @@
 package com.pipikonda.rentbot.service;
 
 import com.pipikonda.rentbot.bot.model.request.impl.AnswerInlineQueryRequest;
-import com.pipikonda.rentbot.bot.model.request.impl.inline_result.InlineQueryResult;
 import com.pipikonda.rentbot.bot.model.update.InlineQuery;
 import com.pipikonda.rentbot.error.BasicLogicException;
 import com.pipikonda.rentbot.error.ErrorCode;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +19,8 @@ public class InlineQueryService {
 
     private final SearchFactory searchFactory;
 
-
     public AnswerInlineQueryRequest findByInlineQuery(InlineQuery inlineQuery) {
-        String query = inlineQuery.getQuery().toUpperCase();
+        String query = inlineQuery.getQuery();
         SearchType searchType = Arrays.stream(SearchType.values())
                 .filter(e -> query.startsWith(e.name()))
                 .findFirst()
@@ -31,7 +28,8 @@ public class InlineQueryService {
 
         return AnswerInlineQueryRequest.builder()
                 .inlineQueryId(inlineQuery.getId())
-                .results(searchFactory.getSearchService(searchType).search(inlineQuery))
+                .results(searchFactory.getSearchService(searchType)
+                        .search(inlineQuery))
                 .build();
     }
 }

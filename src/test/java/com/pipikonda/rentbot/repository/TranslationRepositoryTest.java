@@ -94,6 +94,8 @@ class TranslationRepositoryTest extends TestContainersBaseClass {
 
         assertThat(instance.findTranslationStartWithValue(Set.of(1L), "DN").toList())
                 .isEqualTo(List.of(translation1, translation2));
+        assertThat(instance.findTranslationStartWithValue(Set.of(1L), "dN").toList())
+                .isEqualTo(List.of(translation1, translation2));
         assertThat(instance.findTranslationStartWithValue(Set.of(4L), "DN").toList())
                 .isEqualTo(List.of());
         assertThat(instance.findTranslationStartWithValue(Set.of(1L), "IV").toList())

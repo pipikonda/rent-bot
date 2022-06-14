@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -19,7 +18,7 @@ public interface TranslationRepository extends JpaRepository<Translation, Long> 
 
     Stream<Translation> findByTranslationIdIn(Set<Long> translations);
 
-    @Query(value = "select * from translation where translation_id in :translationId and value like :valuePattern", nativeQuery = true)
+    @Query(value = "select * from translation where translation_id in :translationId and LOWER(value) like LOWER(:valuePattern)", nativeQuery = true)
     Stream<Translation> findByTranslationsAndValue(@Param("translationId") Set<Long> translations,
                                                        @Param("valuePattern") String valuePattern);
 
