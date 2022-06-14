@@ -5,14 +5,11 @@ import com.pipikonda.rentbot.bot.model.request.impl.inline_result.impl.InlineQue
 import com.pipikonda.rentbot.bot.model.request.impl.inline_result.impl.InputTextMessageContent;
 import com.pipikonda.rentbot.bot.model.update.InlineQuery;
 import com.pipikonda.rentbot.domain.Lang;
-import com.pipikonda.rentbot.domain.Translation;
-import com.pipikonda.rentbot.domain.TranslationInfo;
 import com.pipikonda.rentbot.domain.User;
 import com.pipikonda.rentbot.error.BasicLogicException;
 import com.pipikonda.rentbot.error.ErrorCode;
 import com.pipikonda.rentbot.repository.UserRepository;
 import com.pipikonda.rentbot.service.CityService;
-import com.pipikonda.rentbot.service.TranslationService;
 import com.pipikonda.rentbot.service.inline.SearchService;
 import com.pipikonda.rentbot.service.inline.SearchType;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +34,9 @@ public class CitySearchService implements SearchService {
     @Transactional
     public List<InlineQueryResult> search(InlineQuery inlineQuery) {
         String query = simplifyQuery(inlineQuery.getQuery());
+        if (query.length() < 3) {
+            return List.of();
+        }
         log.info("CitySearchComponent");
         User user = userRepository.findById(inlineQuery.getFrom().getId())
                 .orElseThrow(() -> new BasicLogicException(ErrorCode.NOT_FOUND, "Not found user with id " + inlineQuery.getFrom().getId()));

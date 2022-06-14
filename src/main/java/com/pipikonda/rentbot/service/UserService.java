@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final MessageService messageService;
-    private final RentBot rentBot;
 
     public User saveUserState(ChatMemberUpdate chatMemberUpdate) {
         User.UserState userState = convertTelegramState(chatMemberUpdate.getNewChatMember().getStatus());

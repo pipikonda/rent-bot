@@ -38,22 +38,16 @@ class TranslationInfoRepositoryTest extends TestContainersBaseClass {
     }
 
     @Test
-    @Transactional
-    void testGetAllByTranslationType_shouldReturnEmptyStream() {
-        assertThat(instance.getAllByTranslationType(null)).isEmpty();
-    }
-
-    @Test
-    @Transactional
-    void testGetAllByTranslationType() {
+    void testFindByTranslationType() {
         TranslationInfo translationInfo1 = instance.save(TranslationInfo.builder()
-                .translationType(TranslationInfo.TranslationType.CITY_NAME)
+                        .translationType(TranslationInfo.TranslationType.CITY_NAME)
                 .build());
+
         TranslationInfo translationInfo2 = instance.save(TranslationInfo.builder()
                 .translationType(TranslationInfo.TranslationType.CITY_NAME)
                 .build());
 
-        assertThat(instance.getAllByTranslationType(TranslationInfo.TranslationType.CITY_NAME))
-                .isEqualTo(List.of(translationInfo1.getId(), translationInfo2.getId()));
+        assertThat(instance.findByTranslationType(TranslationInfo.TranslationType.CITY_NAME).toList())
+                .isEqualTo(List.of(translationInfo1, translationInfo2));
     }
 }
