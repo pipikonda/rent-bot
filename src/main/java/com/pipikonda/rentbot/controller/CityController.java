@@ -48,7 +48,6 @@ public class CityController {
     public static class CityDto implements Serializable {
 
         static final long serialVersionUID = 42L;
-
         Long id;
         Map<Lang, String> names;
     }
